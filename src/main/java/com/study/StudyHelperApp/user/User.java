@@ -1,7 +1,6 @@
 package com.study.StudyHelperApp.user;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,13 +17,18 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name="_user")
 public class User implements UserDetails {
     @Id @GeneratedValue
-    private long id;
+    private Long id;
     private String name;
     private String surname;
-    private String email;
+    private String password;
+    @Column(unique=true)
+    private String username;
     private List<Role> roles;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -33,16 +37,6 @@ public class User implements UserDetails {
             authorities.add(new SimpleGrantedAuthority(role.name()));
         }
         return authorities;
-    }
-
-    @Override
-    public String getPassword() {
-        return null;
-    }
-
-    @Override
-    public String getUsername() {
-        return null;
     }
 
     @Override

@@ -13,7 +13,8 @@ class UserTest {
         add(Role.STUDENT);
         add(Role.TEACHER);
     }};
-    User user = new User(1,"dawid","dawid","dawid@mail.com",roleList);
+    Long id= 4L;
+    User user = new User(id,"dawid","dawid","dsdds","dawid@mail.com",roleList);
 
     @Test
     void getAuthoritiesRoleCheck() {
@@ -35,19 +36,4 @@ class UserTest {
         assertInstanceOf(GrantedAuthority.class,authorities.get(2));
     }
 
-    @Test
-    void isAccountNonExpired() {
-    }
-
-    @Test
-    void isAccountNonLocked() {
-    }
-
-    @Test
-    void isCredentialsNonExpired() {
-    }
-
-    @Test
-    void isEnabled() {
-    }
 }
