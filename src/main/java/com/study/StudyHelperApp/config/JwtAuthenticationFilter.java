@@ -36,7 +36,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         jwt = authorizatorinHeader.substring(7);
         username = jwtService.getUsernameFromToken(jwt);
-        //TODO implement further authentication by getting userDetails and validating him
         if (username !=null && SecurityContextHolder.getContext().getAuthentication()==null){
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             if(jwtService.isTokenValid(userDetails,jwt)){
