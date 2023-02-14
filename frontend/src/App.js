@@ -1,11 +1,11 @@
-import logo from "./logo.svg";
-import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import Homepage from "./homepage";
 
 function App() {
   return (
-    <div className="App">
-      <h1>elo wale wiadro</h1>
-    </div>
+    <Routes>
+      <Route path="/" element={<Homepage />} />
+    </Routes>
   );
 }
 
