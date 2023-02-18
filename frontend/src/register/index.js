@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import sendRequest from "../service/sendRequest";
 import { useLocalState } from "../service/useLocalStorage";
 
 const Register = () => {
@@ -15,23 +16,30 @@ const Register = () => {
       username: username,
       password: password,
     };
-    fetch("rest/auth/register", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify(requestBody),
-    })
-      .then((response) => {
-        if (response.status === 200) return response.json();
-        else return Promise.reject("Invalid Data");
-      })
+    sendRequest("rest/auth/register", "POST", jwt, requestBody)
       .then(() => {
         window.location.href = "login";
       })
       .catch((message) => {
         window.alert(message);
       });
+    // fetch("rest/auth/register", {
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   method: "POST",
+    //   body: JSON.stringify(requestBody),
+    // })
+    //   .then((response) => {
+    //     if (response.status === 200) return response.json();
+    //     else return Promise.reject("Invalid Data");
+    //   })
+    //   .then(() => {
+    //     window.location.href = "login";
+    //   })
+    //   .catch((message) => {
+    //     window.alert(message);
+    //   });
   }
 
   return (
