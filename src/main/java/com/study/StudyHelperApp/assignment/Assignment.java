@@ -1,6 +1,7 @@
 package com.study.StudyHelperApp.assignment;
 
 
+import com.study.StudyHelperApp.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,4 +20,6 @@ public class Assignment {
     @Column(columnDefinition = "TEXT")
     private String comments;
     //TODO list of images
+    @ManyToOne(optional = false)
+    private User user;
 }
