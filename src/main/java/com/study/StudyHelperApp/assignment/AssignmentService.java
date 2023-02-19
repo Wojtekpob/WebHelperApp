@@ -13,8 +13,8 @@ public class AssignmentService {
     @Autowired
     private final AssignmentRespository repository;
 
-    public void createAssignment(User user){
+    public Assignment createAssignment(User user){
         Assignment assignment = Assignment.builder().user(user).build();
-        repository.save(assignment);
+        return repository.save(assignment);
     }
 }
