@@ -22,4 +22,5 @@ public class Assignment {
     //TODO list of images
     @ManyToOne(optional = false)
     private User user;
+    //TODO Add assignedTo
 }

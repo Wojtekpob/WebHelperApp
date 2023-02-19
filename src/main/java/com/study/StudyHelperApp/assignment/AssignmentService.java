@@ -13,7 +13,8 @@ public class AssignmentService {
     @Autowired
     private final AssignmentRespository repository;
 
-    public Assignment createAssignment(User user){
+    public Assignment createAssignment(User user,AssignmentCreationRequest request){
+        //TODO after adding assignedTo in Assignment add it here aswell
         Assignment assignment = Assignment.builder().user(user).build();
         return repository.save(assignment);
     }
