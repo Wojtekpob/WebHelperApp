@@ -22,7 +22,7 @@ public class AssignmentService {
 
     public Assignment createAssignment(User assignedFrom,AssignmentCreationRequest request){
         Optional<User> foundUser = userRepository.findByUsername(request.getUsername());
-        if (foundUser==null) {
+        if (foundUser.isEmpty()) {
             throw new UsernameNotFoundException("There is no user with username: " + request.getUsername());
         }
         User assignedTo = foundUser.get();
@@ -32,5 +32,16 @@ public class AssignmentService {
                 .title(request.getTitle())
                 .build();
         return assignmentRepository.save(assignment);
+    }
+
+    public Assignment updateAssignment(AssignmentUpdateRequest request){
+        Optional<Assignment> assignment = assignmentRepository.findById(request.getAssignmentId());
+        if (assignment.isEmpty()){
+            throw new RuntimeException("No assignment with such id: "+request.getAssignmentId());
+        }
+        Assignment assignment1=assignment.get();
+        if (request.getComments() != null) assignment1.setComments(request.getComments());
+        if (request.getTitle() != null) assignment1.setTitle(request.getTitle());
+        return assignmentRepository.save(assignment1);
     }
 }

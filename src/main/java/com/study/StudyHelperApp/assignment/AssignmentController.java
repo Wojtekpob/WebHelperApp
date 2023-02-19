@@ -19,7 +19,6 @@ public class AssignmentController {
     private final AssignmentService assignmentService;
 
     @PostMapping("/create")
-    //TODO Create AssignmentCreationResponse and return it here.
     public ResponseEntity<AssignmentCreationResponse> createAssignment(
             @AuthenticationPrincipal User user,
             @RequestBody AssignmentCreationRequest request
@@ -32,4 +31,8 @@ public class AssignmentController {
                 .build();
         return ResponseEntity.ok(response);
     }
+
+    // TODO Implement mapping to update assignment (@PatchMapping)
+
+//    @PostMapping("/update")
 }
