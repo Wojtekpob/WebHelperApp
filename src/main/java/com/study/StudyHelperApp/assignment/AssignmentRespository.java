@@ -9,5 +9,6 @@ import java.util.List;
 
 @Repository
 public interface AssignmentRespository extends JpaRepository<Assignment,Long> {
-    public List<Assignment> findByUser(User user);
+    public List<Assignment> findByAssignedFrom(User user);
+    public List<Assignment> findByAssignedTo(User user);
 }

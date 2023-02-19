@@ -21,6 +21,7 @@ public class Assignment {
     private String comments;
     //TODO list of images
     @ManyToOne(optional = false)
-    private User user;
-    //TODO Add assignedTo
+    private User assignedFrom;
+    @ManyToOne(optional = false)
+    private User assignedTo;
 }
