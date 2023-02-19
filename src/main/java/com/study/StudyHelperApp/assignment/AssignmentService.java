@@ -4,6 +4,7 @@ import com.study.StudyHelperApp.user.User;
 import com.study.StudyHelperApp.user.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class AssignmentService {
     public Assignment updateAssignment(AssignmentUpdateRequest request){
         Optional<Assignment> assignment = assignmentRepository.findById(request.getAssignmentId());
         if (assignment.isEmpty()){
-            throw new RuntimeException("No assignment with such id: "+request.getAssignmentId());
+            throw new ObjectNotFoundException(Assignment.class,"No assignment with such id: "+request.getAssignmentId());
         }
         Assignment assignment1=assignment.get();
         if (request.getComments() != null) assignment1.setComments(request.getComments());

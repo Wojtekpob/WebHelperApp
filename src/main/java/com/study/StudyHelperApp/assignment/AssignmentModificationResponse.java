@@ -8,7 +8,7 @@ import lombok.Data;
 @Builder
 @Data
 @AllArgsConstructor
-public class AssignmentCreationResponse {
+public class AssignmentModificationResponse {
     private String assignmentTitle;
     private String assignedTo;
     private String assignedFrom;

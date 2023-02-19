@@ -6,10 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/rest/assignments")
@@ -19,12 +16,12 @@ public class AssignmentController {
     private final AssignmentService assignmentService;
 
     @PostMapping("/create")
-    public ResponseEntity<AssignmentCreationResponse> createAssignment(
+    public ResponseEntity<AssignmentModificationResponse> createAssignment(
             @AuthenticationPrincipal User user,
             @RequestBody AssignmentCreationRequest request
     ){
         Assignment assignment = assignmentService.createAssignment(user, request);
-        AssignmentCreationResponse response = AssignmentCreationResponse.builder()
+        AssignmentModificationResponse response = AssignmentModificationResponse.builder()
                 .assignedTo(assignment.getAssignedTo().getUsername())
                 .assignedFrom(assignment.getAssignedFrom().getUsername())
                 .assignmentTitle(assignment.getTitle())
@@ -32,7 +29,14 @@ public class AssignmentController {
         return ResponseEntity.ok(response);
     }
 
-    // TODO Implement mapping to update assignment (@PatchMapping)
-
-//    @PostMapping("/update")
+    @PatchMapping("/update")
+    public ResponseEntity<AssignmentModificationResponse> updateAssignment(@RequestBody AssignmentUpdateRequest request){
+        Assignment assignment = assignmentService.updateAssignment(request);
+        AssignmentModificationResponse response = AssignmentModificationResponse.builder()
+                .assignedTo(assignment.getAssignedTo().getUsername())
+                .assignedFrom(assignment.getAssignedFrom().getUsername())
+                .assignmentTitle(assignment.getTitle())
+                .build();
+        return ResponseEntity.ok(response);
+    }
 }
