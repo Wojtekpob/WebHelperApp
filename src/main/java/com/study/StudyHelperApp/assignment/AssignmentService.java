@@ -26,7 +26,11 @@ public class AssignmentService {
             throw new UsernameNotFoundException("There is no user with username: " + request.getUsername());
         }
         User assignedTo = foundUser.get();
-        Assignment assignment = Assignment.builder().assignedFrom(assignedFrom).assignedTo(assignedTo).build();
+        Assignment assignment = Assignment.builder()
+                .assignedFrom(assignedFrom)
+                .assignedTo(assignedTo)
+                .title(request.getTitle())
+                .build();
         return assignmentRepository.save(assignment);
     }
 }

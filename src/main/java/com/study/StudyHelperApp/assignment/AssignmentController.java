@@ -20,10 +20,16 @@ public class AssignmentController {
 
     @PostMapping("/create")
     //TODO Create AssignmentCreationResponse and return it here.
-    public ResponseEntity<Assignment> createAssignment(
+    public ResponseEntity<AssignmentCreationResponse> createAssignment(
             @AuthenticationPrincipal User user,
             @RequestBody AssignmentCreationRequest request
     ){
-        return ResponseEntity.ok(assignmentService.createAssignment(user, request));
+        Assignment assignment = assignmentService.createAssignment(user, request);
+        AssignmentCreationResponse response = AssignmentCreationResponse.builder()
+                .assignedTo(assignment.getAssignedTo().getUsername())
+                .assignedFrom(assignment.getAssignedFrom().getUsername())
+                .assignmentTitle(assignment.getTitle())
+                .build();
+        return ResponseEntity.ok(response);
     }
 }
