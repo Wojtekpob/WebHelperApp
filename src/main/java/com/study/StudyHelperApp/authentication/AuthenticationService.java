@@ -2,6 +2,7 @@ package com.study.StudyHelperApp.authentication;
 
 
 import com.study.StudyHelperApp.config.JwtService;
+import com.study.StudyHelperApp.exceptions.UsernameAlreadyExistsException;
 import com.study.StudyHelperApp.user.Role;
 import com.study.StudyHelperApp.user.User;
 import com.study.StudyHelperApp.user.UserRepository;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 @RequiredArgsConstructor
@@ -29,7 +31,7 @@ public class AuthenticationService {
     @Autowired
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(RegisterRequest request){
         User user = User.builder()
                 .name(request.getName())
                 .surname(request.getSurname())
@@ -37,7 +39,10 @@ public class AuthenticationService {
                 .roles(new ArrayList<Role>() {{add(Role.STUDENT);};})
                 .password(new BCryptPasswordEncoder().encode(request.getPassword()))
                 .build();
-        System.out.println(user);
+        userRepository.findByUsername(user.getUsername())
+                        .ifPresent(foundUser->{
+                            throw new UsernameAlreadyExistsException("User with username: "+foundUser.getUsername()+" already exists.");
+                        });
         userRepository.save(user);
         String jwtToken = jwtService.GenerateJwtToken(new HashMap<String, Object>(), user);
         return new AuthenticationResponse(jwtToken);
