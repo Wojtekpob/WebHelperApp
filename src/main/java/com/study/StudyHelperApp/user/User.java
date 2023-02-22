@@ -29,6 +29,13 @@ public class User implements UserDetails {
     private List<Role> roles;
 
 
+    public boolean hasRole(Role role){
+        return getAuthorities().stream()
+                .anyMatch(
+                        authority->authority.getAuthority().equals(role.name())
+                );
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
@@ -37,6 +44,8 @@ public class User implements UserDetails {
         }
         return authorities;
     }
+
+
 
     @Override
     public boolean isAccountNonExpired() {

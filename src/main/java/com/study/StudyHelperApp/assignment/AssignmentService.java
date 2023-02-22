@@ -1,5 +1,6 @@
 package com.study.StudyHelperApp.assignment;
 
+import com.study.StudyHelperApp.exceptions.AccessException;
 import com.study.StudyHelperApp.user.Role;
 import com.study.StudyHelperApp.user.User;
 import com.study.StudyHelperApp.user.UserRepository;
@@ -9,7 +10,9 @@ import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.ErrorResponseException;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +26,10 @@ public class AssignmentService {
     @Autowired
     private final UserRepository userRepository;
 
-    public Assignment createAssignment(User assignedFrom,AssignmentCreationRequest request){
+    public Assignment createAssignment(User assignedFrom,AssignmentCreationRequest request) {
+        if (!assignedFrom.hasRole(Role.TEACHER)){
+            throw new AccessException("Only Teacher can give assignments");
+        }
         Optional<User> foundUser = userRepository.findByUsername(request.getUsername());
         if (foundUser.isEmpty()) {
             throw new UsernameNotFoundException("There is no user with username: " + request.getUsername());
@@ -49,8 +55,7 @@ public class AssignmentService {
     }
 
     public List<Assignment> getAssignments(User user) {
-        boolean showTeacher = user.getAuthorities().stream()
-                .anyMatch(authority->authority.getAuthority().equals(Role.TEACHER.name()));
+        boolean showTeacher = user.hasRole(Role.TEACHER);
         if (showTeacher){
             return assignmentRepository.findByAssignedFrom(user);
         }else{
