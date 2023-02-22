@@ -1,5 +1,6 @@
 package com.study.StudyHelperApp.assignment;
 
+import com.study.StudyHelperApp.user.Role;
 import com.study.StudyHelperApp.user.User;
 import com.study.StudyHelperApp.user.UserRepository;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -44,5 +46,15 @@ public class AssignmentService {
         if (request.getComments() != null) assignment1.setComments(request.getComments());
         if (request.getTitle() != null) assignment1.setTitle(request.getTitle());
         return assignmentRepository.save(assignment1);
+    }
+
+    public List<Assignment> getAssignments(User user) {
+        boolean showTeacher = user.getAuthorities().stream()
+                .anyMatch(authority->authority.getAuthority().equals(Role.TEACHER.name()));
+        if (showTeacher){
+            return assignmentRepository.findByAssignedFrom(user);
+        }else{
+            return assignmentRepository.findByAssignedTo(user);
+        }
     }
 }
