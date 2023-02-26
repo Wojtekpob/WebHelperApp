@@ -1,5 +1,6 @@
 package com.study.StudyHelperApp.assignment;
 
+
 import com.study.StudyHelperApp.exceptions.AccessException;
 import com.study.StudyHelperApp.user.Role;
 import com.study.StudyHelperApp.user.User;
@@ -11,7 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.ErrorResponseException;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +26,9 @@ import java.util.Optional;
 @AllArgsConstructor
 @Service
 public class AssignmentService {
+
+    private final String FOLDER_PATH = "C:\\Users\\Wojtek\\Desktop\\xd\\";
+
     @Autowired
     private final AssignmentRespository assignmentRepository;
     @Autowired
@@ -61,5 +69,36 @@ public class AssignmentService {
         }else{
             return assignmentRepository.findByAssignedTo(user);
         }
+    }
+
+    public String uploadAssignmentFile(MultipartFile file,Long assignmentId,User user) throws IOException {
+        String filePath = FOLDER_PATH;
+        boolean isTeacher = user.hasRole(Role.TEACHER);
+        if (isTeacher){
+            filePath+="todo"+assignmentId;
+        }else{
+            filePath+="done"+assignmentId;
+        }
+        Optional<Assignment> assignment = assignmentRepository.findById(assignmentId);
+        if (assignment.isEmpty()){
+            throw new ObjectNotFoundException(Assignment.class,"No assignment with such id: "+assignmentId);
+        }
+        Assignment assignment1=assignment.get();
+        assignment1.setToDoFilePath(filePath);
+        assignmentRepository.save(assignment1);
+
+        file.transferTo(new File(filePath));
+
+        return "Uploaded successfully";
+    }
+
+    public byte[] downloadAssignmentFile(Long fileId,boolean todo) throws IOException {
+        String filePathPrefix = "done";
+        if (todo==true){
+            filePathPrefix="todo";
+        }
+        String filePath=FOLDER_PATH+filePathPrefix+fileId;
+        byte[] file = Files.readAllBytes(new File(filePath).toPath());
+        return file;
     }
 }

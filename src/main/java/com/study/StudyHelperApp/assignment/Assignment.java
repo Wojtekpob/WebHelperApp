@@ -19,9 +19,10 @@ public class Assignment {
     private String title;
     @Column(columnDefinition = "TEXT")
     private String comments;
-    //TODO list of images
     @ManyToOne(optional = false)
     private User assignedFrom;
     @ManyToOne(optional = false)
     private User assignedTo;
+    private String toDoFilePath;
+    private String doneFilePath;
 }
