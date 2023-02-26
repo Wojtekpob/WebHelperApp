@@ -3,6 +3,7 @@ package com.study.StudyHelperApp.assignment;
 
 import com.study.StudyHelperApp.user.User;
 import lombok.AllArgsConstructor;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -57,7 +58,14 @@ public class AssignmentController {
             @RequestParam("image")MultipartFile file,
             @RequestParam("assignment_id") Long id
     ) throws IOException {
-        String resp = assignmentService.uploadAssignmentFile(file,id,user);
+        String resp;
+        try {
+            resp = assignmentService.uploadAssignmentFile(file, id, user);
+        } catch (ObjectNotFoundException e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(e.getEntityName());
+        }
         return ResponseEntity.ok(resp);
     }
 
