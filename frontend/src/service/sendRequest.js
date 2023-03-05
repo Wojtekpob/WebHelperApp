@@ -17,7 +17,8 @@ function sendRequest(url, method, jwt, requestBody) {
   }
 
   return fetch(url, data).then((response) => {
-    if (response.status === 200) return response.json();
+    if (response.ok) return response.json();
+    else return Promise.reject(response.statusText);
   });
 }
 
