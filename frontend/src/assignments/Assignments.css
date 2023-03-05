@@ -1,0 +1,30 @@
+main {
+  background-color: lightgreen;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.circle {
+  width: 500px;
+  height: 500px;
+  border-radius: 100%;
+  background-color: red;
+}
+
+.square {
+  width: 500px;
+  height: 500px;
+
+  background-color: orange;
+}
+
+.assignmentBox {
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  display: inline-block;
+  border-radius: 20%;
+  background-color: lightblue;
+  margin: 5px;
+}
