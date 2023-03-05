@@ -17,12 +17,14 @@ const Register = () => {
       password: password,
     };
     sendRequest("rest/auth/register", "POST", jwt, requestBody)
-      .then(() => {
+      .then((response) => {
+        console.log(response);
         window.location.href = "login";
       })
-      .catch((message) => {
-        window.alert(message);
+      .catch((errorResponse) => {
+        alert(errorResponse);
       });
+
     // fetch("rest/auth/register", {
     //   headers: {
     //     "Content-Type": "application/json",

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import sendRequest from "../service/sendRequest";
 import { useLocalState } from "../service/useLocalStorage";
 
 const Login = () => {
@@ -14,18 +15,10 @@ const Login = () => {
       username: username,
       password: password,
     };
-    fetch("rest/auth/login", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "post",
-      body: JSON.stringify(requestBody),
-    })
-      .then((response) => {
-        if (response.status === 200) return response.json();
-        else return Promise.reject("Invalid login or password");
-      })
+
+    sendRequest("rest/auth/login", "POST", "", requestBody)
       .then((data) => {
+        console.log(data);
         setJwt(data.jwtToken);
         window.location.href = "assignments";
       })
