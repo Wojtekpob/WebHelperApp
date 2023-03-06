@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import sendRequest from "../service/sendRequest";
 import { useLocalState } from "../service/useLocalStorage";
@@ -11,10 +11,18 @@ const Assignment = () => {
 
   let params = useParams();
   let assignmentId = params.id;
-  console.log(assignmentId);
+
+  useEffect(() => {
+    getAssignment(assignmentId);
+  }, []);
 
   function getAssignment(id) {
-    //
+    sendRequest("/rest/assignments/assignment?id=" + id, "GET", jwt).then(
+      (response) => {
+        setTitle(response.title);
+        setComments(response.comments);
+      }
+    );
   }
 
   function submitChanges() {
@@ -27,15 +35,17 @@ const Assignment = () => {
 
   return (
     <>
-      <div>{assignmentId}</div>
-      <textarea
-        type="textarea"
-        id="comment_box"
-        value={comments}
-        placeholder="Comments..."
-        onChange={(commentsEvent) => setComments(commentsEvent.target.value)}
-      />
-      <button onClick={() => submitChanges()}>Submit Assignment</button>
+      <div id="contener">
+        <div>{title}</div>
+        <textarea
+          type="textarea"
+          id="comment_box"
+          value={comments}
+          placeholder="Comments..."
+          onChange={(commentsEvent) => setComments(commentsEvent.target.value)}
+        />
+        <button onClick={() => submitChanges()}>Submit Assignment</button>
+      </div>
     </>
   );
 };

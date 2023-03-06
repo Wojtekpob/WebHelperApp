@@ -21,7 +21,7 @@ const Assignments = () => {
 
   return (
     <>
-      <div>
+      <div id="assignments">
         {assignments ? (
           assignments.map((assginment) => (
             <div className="assignmentBox">
@@ -38,31 +38,6 @@ const Assignments = () => {
       </div>
     </>
   );
-  //   const nameInput = React.useRef(null);
-  //   const [isCircle, setIsCircle] = useState(true);
-  //   const ref = React.useRef(null);
-  //   function xdxd() {
-  //     setIsCircle(!isCircle);
-  //     // console.log(ref.current);
-  //     // ref.innerHtml = "<div>XDXDDXXD</div>";
-  //   }
-  //   function clearInput() {
-  //     nameInput.current.value = "";
-  //   }
-  //   return (
-  //     <>
-  //       <main>
-  //         <button onClick={xdxd}>Chane shape</button>
-  //         <div className={isCircle ? "circle" : "square"} ref={ref}></div>
-  //         <input
-  //           type="text"
-  //           placeholder="Write your name..."
-  //           ref={nameInput}
-  //         ></input>
-  //         <button onClick={clearInput}> Submit</button>
-  //       </main>
-  //     </>
-  //   );
 };
 
 export default Assignments;
