@@ -1,5 +1,15 @@
 #comment_box {
-  margin: 100px;
-  height: 100px;
+  margin: 20px;
   width: 300px;
+  height: 200px;
+  max-height: 200px;
+  max-width: 300px;
+  min-width: 300px;
+  min-height: 200px;
+}
+
+#contener {
+  margin-top: 200px;
+  display: grid;
+  place-items: center;
 }
