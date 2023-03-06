@@ -5,6 +5,7 @@ import PrivatePage from "./privatePage";
 import PrivateRoute from "./privateRoute";
 import Register from "./register";
 import Assignments from "./assignments/Assignments";
+import Assignment from "./assignment/Assignment";
 
 function App() {
   return (
@@ -25,6 +26,14 @@ function App() {
         element={
           <PrivateRoute>
             <Assignments />
+          </PrivateRoute>
+        }
+      ></Route>
+      <Route
+        path="assignments/:id"
+        element={
+          <PrivateRoute>
+            <Assignment />
           </PrivateRoute>
         }
       ></Route>

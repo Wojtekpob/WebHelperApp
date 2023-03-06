@@ -12,7 +12,6 @@ const Assignments = () => {
     setAssignments(null);
     sendRequest("rest/assignments", "GET", jwt).then((response) => {
       setAssignments(response);
-      console.log(response);
     });
   }
 
@@ -26,7 +25,7 @@ const Assignments = () => {
         {assignments ? (
           assignments.map((assginment) => (
             <div className="assignmentBox">
-              <Link to={"/assignments" + assginment.id}>
+              <Link to={"/assignments/" + assginment.id}>
                 {assginment.title}
               </Link>
               <br />
