@@ -22,6 +22,15 @@ public class AssignmentController {
     @Autowired
     private final AssignmentService assignmentService;
 
+
+    @GetMapping("/assignment")
+    public ResponseEntity<Assignment> getAssignment(
+            @RequestParam Long id
+    ){
+        return ResponseEntity.ok(assignmentService.getAssignment(id));
+    }
+
+
     @PostMapping("/create")
     public ResponseEntity<AssignmentModificationResponse> createAssignment(
             @AuthenticationPrincipal User user,

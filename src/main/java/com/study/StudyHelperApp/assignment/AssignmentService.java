@@ -34,6 +34,12 @@ public class AssignmentService {
     @Autowired
     private final UserRepository userRepository;
 
+    public Assignment getAssignment(Long id){
+        Optional<Assignment> assignment = assignmentRepository.findById(id);
+
+        return assignment.orElseThrow(()->new ObjectNotFoundException(Assignment.class,"No assignment with such id: "+id));
+    }
+
     public Assignment createAssignment(User assignedFrom,AssignmentCreationRequest request) {
         if (!assignedFrom.hasRole(Role.TEACHER)){
             throw new AccessException("Only Teacher can give assignments");
