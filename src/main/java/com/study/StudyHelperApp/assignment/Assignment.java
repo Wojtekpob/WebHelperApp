@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class Assignment {
-    @Id @GeneratedValue
+    @Id @GeneratedValue 
     private Long id;
     private String title;
     @Column(columnDefinition = "TEXT")

@@ -28,7 +28,6 @@ class AssignmentServiceTest {
     void setUp(){
         MockitoAnnotations.initMocks(this);
 
-//        underTest = new AssignmentService(assignmentRespository,userRepository);
     }
 
     @Test
@@ -50,13 +49,5 @@ class AssignmentServiceTest {
 
         assertThrows(ObjectNotFoundException.class, ()->{underTest.getAssignment(id);});
         verify(assignmentRespository).findById(id);
-    }
-
-    @Test
-    void updateAssignment() {
-    }
-
-    @Test
-    void getAssignments() {
     }
 }
