@@ -5,6 +5,7 @@ import PrivateRoute from "./privateRoute";
 import Register from "./register";
 import Assignments from "./assignments/Assignments";
 import Assignment from "./assignment/Assignment";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (

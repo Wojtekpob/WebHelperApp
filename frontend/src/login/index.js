@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import sendRequest from "../service/sendRequest";
 import { useLocalState } from "../service/useLocalStorage";
 
@@ -29,30 +30,48 @@ const Login = () => {
 
   return (
     <>
-      <div>
-        <label htmlFor="username">Username</label>
-        <input
-          type="username"
-          id="username"
-          value={username}
-          onChange={(usernameEvent) => setUsername(usernameEvent.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(passwordEvent) => setPassword(passwordEvent.target.value)}
-        />
-      </div>
-      <div>
-        <button id="submit" type="button" onClick={() => sendLoginRequest()}>
-          Login
-        </button>
-      </div>
-      <a href="register">Register</a>
+      <Container className="mt-3">
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Username</Form.Label>
+          <Form.Control
+            className="sm-2 w-50"
+            type="username"
+            id="username"
+            placeholder="Enter username"
+            value={username}
+            onChange={(usernameEvent) =>
+              setUsername(usernameEvent.target.value)
+            }
+          />
+        </Form.Group>
+        <Form.Group className="mb-3 w-50" controlId="formBasicEmail">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            id="password"
+            placeholder="Enter password"
+            value={password}
+            onChange={(passwordEvent) =>
+              setPassword(passwordEvent.target.value)
+            }
+          />
+        </Form.Group>
+        <Row>
+          <Col>
+            <Button
+              className="m-2"
+              size="lg"
+              id="submit"
+              type="button"
+              onClick={() => sendLoginRequest()}
+              variant="success"
+            >
+              Login
+            </Button>
+            <a href="register">Register</a>
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 };
