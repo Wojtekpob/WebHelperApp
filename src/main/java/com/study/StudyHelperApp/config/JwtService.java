@@ -60,7 +60,7 @@ public class JwtService {
     public String GenerateJwtToken(
             Map<String,Object> claims, UserDetails userDetails
             ){
-        claims.put("roles",userDetails.getAuthorities().);
+        claims.put("roles",userDetails.getAuthorities());
         return Jwts
                 .builder()
                 .setClaims(claims)
