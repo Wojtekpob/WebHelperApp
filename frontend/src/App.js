@@ -12,7 +12,6 @@ import TeacherAssignment from "./teacherAssignment/teacherAssignment";
 
 function App() {
   const [jwt, setJwt] = useLocalState("", "jwt");
-  console.log(hasRole(jwt, "STUDENT"));
   return (
     <Routes>
       <Route path="/" element={<Homepage />} />
