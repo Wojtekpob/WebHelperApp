@@ -1,5 +1,3 @@
-import { useLocalState } from "./useLocalStorage";
-
 function sendRequest(url, method, jwt, requestBody) {
   const data = {
     headers: {

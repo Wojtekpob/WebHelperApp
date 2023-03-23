@@ -6,8 +6,13 @@ import Register from "./register";
 import Assignments from "./assignments/Assignments";
 import Assignment from "./assignment/Assignment";
 import "bootstrap/dist/css/bootstrap.min.css";
+import hasRole from "./service/getRolesFromJwt";
+import { useLocalState } from "./service/useLocalStorage";
+import TeacherAssignment from "./teacherAssignment/teacherAssignment";
 
 function App() {
+  const [jwt, setJwt] = useLocalState("", "jwt");
+  console.log(hasRole(jwt, "STUDENT"));
   return (
     <Routes>
       <Route path="/" element={<Homepage />} />
@@ -24,9 +29,15 @@ function App() {
       <Route
         path="assignments/:id"
         element={
-          <PrivateRoute>
-            <Assignment />
-          </PrivateRoute>
+          hasRole(jwt, "STUDENT") ? (
+            <PrivateRoute>
+              <Assignment />
+            </PrivateRoute>
+          ) : (
+            <PrivateRoute>
+              <TeacherAssignment />
+            </PrivateRoute>
+          )
         }
       ></Route>
     </Routes>
