@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import sendRequest from "../service/sendRequest";
 import { useLocalState } from "../service/useLocalStorage";
 import "./Assignments.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import hasRole from "../service/getRolesFromJwt";
 import { Button, Card, Col, Form, InputGroup, Row } from "react-bootstrap";
 
@@ -21,6 +21,8 @@ const Assignments = () => {
     });
   }
 
+  const navigate = useNavigate();
+
   function sendAssignmentCreationRequest() {
     let body = {
       username: username,
@@ -30,6 +32,10 @@ const Assignments = () => {
       alert(msg)
     );
   }
+
+  const navigateToContacts = (id) => {
+    navigate("/assignments/" + id);
+  };
 
   useEffect(() => {
     getAssignments();
@@ -41,11 +47,18 @@ const Assignments = () => {
         {assignments ? (
           assignments.map((assginment) => (
             <div className="assignmentBox">
-              <Link to={"/assignments/" + assginment.id}>
-                {assginment.title}
-              </Link>
+              <p className="h4 m-3">{assginment.title}</p>
+
               <br />
-              {assginment.id}
+              <Col xs="auto">
+                <Button
+                  type="button"
+                  className="mb-2 allign-items-center m-4"
+                  onClick={() => navigateToContacts(assginment.id)}
+                >
+                  View Assignment
+                </Button>
+              </Col>
             </div>
           ))
         ) : (
